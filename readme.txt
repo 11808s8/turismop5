@@ -12,6 +12,11 @@ python3 manage.py migrate
 
 pra rodar as migrações.
 
+!!Importante!!
+Para inserir os dados de registros do CADASTUR, é necessário
+executar o script na pasta crontab:
+$ python3 insercao_registros_novos.py
+
 Para rodar o servidor local:
 
 python3 manage.py runserver
