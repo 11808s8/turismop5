@@ -3,3 +3,5 @@ include/
 lib/
 share/
 local/
+catalogo_guias/__pycache__/
+catalogo_guias/migrations/__pycache__/
