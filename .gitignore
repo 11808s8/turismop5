@@ -3,5 +3,6 @@ include/
 lib/
 share/
 local/
-catalogo_guias/__pycache__/
-catalogo_guias/migrations/__pycache__/
+/turismo_p5/catalogo_guias/__pycache__/
+/turismo_p5/catalogo_guias/migrations/__pycache__/
+/turismo_p5/turismo_p5/__pycache__/
