@@ -5,7 +5,9 @@ Extensão do postgresql necessária (suas dependências também. Na hora de roda
 Com seu virtualenv ativo, execute, dentro dele:
 pip3 install -r requirements.txt 
 
-Disso, você pode copiar o projeto para seu virtualenv, mantendo o nome turismop5
+É necessário ter o db pertinente ao projeto já criado (info sobre o nome dentro do settings.py)
+
+Disso, você pode clonar o projeto para seu virtualenv, mantendo o nome turismop5
 
 Entre na pasta do projeto e execute:
 python3 manage.py migrate
