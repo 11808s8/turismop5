@@ -14,6 +14,8 @@ python3 manage.py migrate
 
 pra rodar as migrações.
 
+OBS: se reclamar que não encontrou o postgis.control, rodar primeiro sudo apt-get install postgis postgresql-9.6-postgis-scripts
+
 !!Importante!!
 Para inserir os dados de registros do CADASTUR, é necessário
 executar o script na pasta crontab APÓS a execução das migrações:

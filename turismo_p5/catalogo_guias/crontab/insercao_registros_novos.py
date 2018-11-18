@@ -8,7 +8,7 @@ tabela = 'controle_ultima_verificacao_registro'
 #aqui checa no banco o último verificado
 
 # Linha de conexão com o banco
-conn_string = "host='localhost' dbname='turismop5' user='postgres' password='postgres'"
+conn_string = "host='localhost' dbname='turismop5' user='postgres' password='senha'"
 # get a connection, if a connect cannot be made an exception will be raised here
 conn = psycopg2.connect(conn_string)
 

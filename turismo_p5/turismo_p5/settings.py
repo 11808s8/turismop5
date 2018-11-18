@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'turismop5',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'senha',
         'HOST': 'localhost',
         'PORT': '',
     }
