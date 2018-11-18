@@ -1,6 +1,7 @@
 Versão do Python utilizada: 3.6.6 (sendo 3+ já está de bom tamanho)
 Banco de dados utilizado: Postgresql 10
-Extensão do postgresql necessária (suas dependências também. Na hora de rodar a migração ele acusa quais são necessárias): Postgis2.4
+Extensão do postgresql necessária (suas dependências também. Na hora de rodar a migração ele acusa quais são necessárias): 
+Postgis2.4
 
 Com seu virtualenv ativo, execute, dentro dele:
 pip3 install -r requirements.txt 
