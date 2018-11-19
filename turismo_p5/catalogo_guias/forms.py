@@ -6,4 +6,4 @@ class RoteiroForm(forms.ModelForm):
 
     class Meta:
         model = Roteiro
-        fields = ('nome', 'rota', 'guias', 'avaliacao')
+        fields = ('nome', 'rota', 'guias', 'avaliacao',)

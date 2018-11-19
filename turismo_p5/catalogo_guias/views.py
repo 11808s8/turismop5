@@ -14,9 +14,9 @@ def roteiro_new(request):
     if request.method == "POST":
         form = RoteiroForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-            return redirect('post_detail')
+            Roteiro = form.save(commit=False)
+            Roteiro.save()
+            return redirect('home.html')
     else:
         form = RoteiroForm()
-    return render(request, 'catalogo_guias/roteiro_new.html')
+    return render(request, 'catalogo_guias/roteiro_new.html', {'form': form})

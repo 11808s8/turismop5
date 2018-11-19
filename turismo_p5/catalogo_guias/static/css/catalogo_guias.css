@@ -1,8 +1,27 @@
+.roteiro_new{
+	background-color: #FFFFF0;
+}
+
+h1 .roteiro_new {
+	margin-top=500px;
+}
+
+
 h1 {
     color: #FCA205;
     font-family: 'Lobster';
+    text-align: center;
 }
 
-.post-form textarea, .post-form input {
-    width: 100%;
+
+.roteiro-form text, .roteiro-form input {
+	width: 40%;
+    align: center;
+
+}
+
+.page-header {
+    background-color: #ff9400;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
 }
