@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'leaflet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'turismop5',
         'USER': 'postgres',
-        'PASSWORD': 'senha',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '',
     }
