@@ -1,0 +1,24 @@
+{% load static %}
+{% load leaflet_tags %}
+<html>
+    <head>
+        <!-- {{ form.media }} -->
+        <title>Cadastro de Ponto</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+        {% leaflet_js %}
+        {% leaflet_css %}
+    </head>
+    <body class="roteiro_new">
+        <h1>Novo Ponto</h1>
+        <form method="POST" class="roteiro-form">{% csrf_token %}
+            {{ form }}
+            <!-- {% leaflet_map "mapa" %} -->
+            <button type="submit">Enviar</button>
+        </form>
+    </body>
+
+
+</html>
