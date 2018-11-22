@@ -1,11 +1,20 @@
 # from django.db import models
 from django.contrib.gis.db import models
+from improved_user.model_mixins import AbstractUser
 
 # Create your models here.
 
+class CustomUser(AbstractUser):
+    pass
+    # email = models.EmailField(unique=True)
+
+    # USERNAME_FIELD='email'
+    # def __str__(self):
+    #     return self.email
+
 class Pessoa(models.Model):
     nome = models.CharField(max_length=100)
-    email = models.CharField(max_length=80)
+    
     telefone = models.PositiveIntegerField()
 
     class Meta:

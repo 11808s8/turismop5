@@ -3,9 +3,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-            ('catalogo_guias','cria_tabela_controle_registros_003'),
+            ('catalogo_guias','0001_initial'),
     ]
     operations = [
         migrations.RunSQL(
-            [("alter table controle_registro alter column nro_registro type varchar")])
+            [("Create table controle_registro (id SERIAL PRIMARY KEY,nro_registro int);")])
     ]
