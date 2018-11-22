@@ -18,3 +18,4 @@ requests==2.20.1
 urllib3==1.24.1
 virtualenv==15.1.0
 django-leaflet == 0.24.0
+django-improved-user == 1.0.0
