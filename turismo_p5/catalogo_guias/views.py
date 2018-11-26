@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.core.serializers import serialize
 
-from .models import Roteiro, Destino, Ponto
+from .models import Roteiro, Atrativo, Ponto
 from .forms import RoteiroForm, AtrativoForm, PontoForm
 
 
@@ -32,7 +33,12 @@ def atrativo_new(request):
             return redirect('/')
     else:
         form = AtrativoForm()
+    
     return render(request, 'catalogo_guias/atrativo_new.html', {'form': form})
+
+def dados_todos_pontos(request):
+    points_geojson = serialize('geojson', Ponto.objects.all())
+    return HttpResponse(points_geojson,content_type='application/json')
 
 def ponto_new(request):
     if request.method == "POST":

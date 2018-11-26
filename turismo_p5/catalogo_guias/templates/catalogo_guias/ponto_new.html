@@ -15,7 +15,7 @@
         <h1>Novo Ponto</h1>
         <form method="POST" class="roteiro-form">{% csrf_token %}
             {{ form }}
-            <!-- {% leaflet_map "mapa" %} -->
+            {% leaflet_map "mapa" %}
             <button type="submit">Enviar</button>
         </form>
     </body>

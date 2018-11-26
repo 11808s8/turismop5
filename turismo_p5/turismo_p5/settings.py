@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'leaflet',
+    'djgeojson',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'catalogo_guias.apps.CatalogoGuiasConfig'
+    'catalogo_guias.apps.CatalogoGuiasConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SERIALIZATION_MODULES = {
+     "geojson": "django.contrib.gis.serializers.geojson",
+  }
 
 ROOT_URLCONF = 'turismo_p5.urls'
 
@@ -133,6 +138,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Validação usuário
 

@@ -41,7 +41,7 @@ class Protocolo(models.Model):
 
 
 class Ponto(models.Model):
-    ponto = models.PointField()
+    geom = models.PointField()
 
 
 # não sei se ficará assim msm
@@ -49,7 +49,7 @@ class Mapa(models.Model):
     pontos = models.ForeignKey(Ponto, on_delete=None)
 
 
-class Destino(models.Model):
+class Atrativo(models.Model):
     nome = models.CharField(max_length=100)
     infos = models.TextField()
     ponto = models.ForeignKey(Ponto, on_delete=models.CASCADE)
@@ -57,7 +57,7 @@ class Destino(models.Model):
 
 class Roteiro(models.Model):
     nome = models.CharField(max_length=100)
-    rota = models.ForeignKey(Destino, on_delete = models.CASCADE)
+    rota = models.ForeignKey(Atrativo, on_delete = models.CASCADE)
     guias = models.ForeignKey(Pessoa_Juridica, on_delete=None)
     avaliacao = models.FloatField()
 

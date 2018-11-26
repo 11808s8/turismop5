@@ -1,4 +1,6 @@
 {% load static %}
+{% load leaflet_tags %}
+{% load geojson_tags %}
 <html>
     <head>
         <title>Cadastro de Roteiro</title>
@@ -6,8 +8,34 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+        {% leaflet_js %}
+        {% leaflet_css %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
     </head>
+    <script type="text/javascript" src="{% static 'js/leaflet.ajax.min.js'%}">
+    </script>
+        
     <body class="roteiro_new">
+            <script type="text/javascript">
+                function main_map_init(map, options){
+                    dataurl = '{% url "data" %}'
+                    fetch(dataurl)
+          .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(data) {
+            L.geoJson(data, {
+              onEachFeature: function onEachFeature(feature, layer) {
+                // var props = feature.properties;
+                // console.log(feature);
+                var content = '<h3> ID Ponto: ' + feature.id + '</h3>';
+                layer.bindPopup(content);
+            }}).addTo(map);
+                });
+                }
+              </script>
         <h1>Novo Atrativo</h1>
         <form method="POST" class="roteiro-form">{% csrf_token %}
             {{ form.non_field_errors }}
@@ -29,5 +57,7 @@
             </div>
             <button type="submit">Enviar</button>
         </form>
+        {% leaflet_map "mapa" callback="main_map_init" %}
     </body>
+
 </html>

@@ -6,6 +6,7 @@ class Migration(migrations.Migration):
             ('catalogo_guias','0001_initial'),
     ]
     operations = [
+        CreateExtension('postgis'),
         migrations.RunSQL(
             [("Create table controle_registro (id SERIAL PRIMARY KEY,nro_registro int);")])
     ]
