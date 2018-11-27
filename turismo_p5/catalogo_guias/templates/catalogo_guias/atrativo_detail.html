@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+    <head>
+        <title>Cadastro de Roteiro</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+    </head>
+    <body class="roteiro_new">
+        
+        {% block content %}
+        <h1>Nome: {{ atrativo.nome }}</h1>
+
+        <p>{{ atrativo.infos }} </p> <!-- author detail link not yet defined -->
+        
+        <div style="margin-left:20px;margin-top:20px">
+        
+
+        {% for guia in atrativo.guias.all %}
+            <hr>
+            <!-- <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p> -->
+            <!-- {% if copy.status != 'a' %} -->
+            <p><strong>CNPJ do guia:</strong> {{guia.cnpj}}</p>
+            <!-- {% endif %} -->
+            <!-- <p><strong>Imprint:</strong> {{copy.imprint}}</p> -->
+            <!-- <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p> -->
+        {% endfor %}
+        
+        {% endblock %}
+    </body>
+</html>

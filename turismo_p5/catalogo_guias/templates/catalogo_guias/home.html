@@ -1,17 +1,63 @@
 {% load static %}
-
+{% load leaflet_tags %}
+{% load geojson_tags %}
 <html>
     <head>
         <title>Turismo P5</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        {% leaflet_js %}
+        {% leaflet_css %} 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/leaflet.ajax.min.js'%}"></script>
+
     </head>
+    
     <body>
+        <script type="text/javascript">
+            function main_map_init(map, options){
+                dataurl = '{% url "dados_atrativos" %}'
+                dataurl2 = '{% url "data" %}'
+                fetch(dataurl)
+                .then(function(resp) {
+                return resp.json();
+                })
+                .then(function(data) {
+                    fetch(dataurl2)
+                    .then(function(resp){
+                        return resp.json()
+                    })
+                    .then(function(data1){
+                        L.geoJson(data1, {
+                        onEachFeature: function onEachFeature(feature, layer) {
+                            // var props = feature.properties;
+                            //  console.log(feature);
+                            // var content = '<h3> ID Ponto: ' + feature.id + '</h3>';
+                            var content = '<ul>';
+                            for(var i=0;i<data.length;i++){
+                                if(data[0].fields.ponto === feature.id){
+                                    content+='<li><a href="/atrativo/'+  data[0].pk + '" > Atrativo ' + data[0].fields.nome + '</a>';
+                                    
+                                }
+                            }
+                            content+='</ul>';
+                            layer.bindPopup(content);
+                            
+                        }}).addTo(map);
+                    });
+                });
+            }
+        </script>
         <h1>Home do site!!</h1>
         <div class="page-header">
             <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a>
             <a href="{% url 'atrativo_new' %}"><button>Cadastrar Atrativo</button></a>
+            <a href="{% url 'cadastro_cliente' %}"><button>Cadastrar Cliente</button></a>
+            <a href="{% url 'cadastro_guia' %}"><button>Cadastrar Guia de Turismo</button></a>
         </div>
+
+        {% leaflet_map "mapa" callback="main_map_init" %}
+
     </body>
 </html>
