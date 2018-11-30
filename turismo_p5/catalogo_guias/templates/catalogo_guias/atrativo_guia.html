@@ -1,0 +1,34 @@
+{% load static %}
+<html>
+    <head>
+        <title>Cadastro de Roteiro</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+    </head>
+    </script>
+        
+        <h1>Selecione o atrativo que você atende:</h1>
+        <form method="POST" class="roteiro-form" >{% csrf_token %}
+            {% comment %} {{ form.non_field_errors }} {% endcomment %}
+            
+            {% comment %} <div class="fieldWrapper"> {% endcomment %}
+             <select name="select">
+                {% for item in guiasatrativos %}
+                    <option  value="{{item.0}}">{{item.1}}</option>
+                {% endfor %}
+            </select> 
+            
+            {% comment %} </div> {% endcomment %}
+                {% comment %} {{form.nome.errors}} {% endcomment %}
+                {% comment %} <label for="{{form.nome.id_for_label}}">Nome do Atrativo:</label> {% endcomment %}
+                {% comment %} {{form.nome}} {% endcomment %}
+            <button type="submit">Enviar</button>
+        </form>
+    </body>
+
+</html>

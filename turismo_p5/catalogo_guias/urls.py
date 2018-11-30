@@ -13,4 +13,5 @@ urlpatterns = [
     path('contas/cadastro/usuario/guia', views.guia_new.as_view(), name='cadastro_guia'),
     path('dados_todos_atrativos',views.dados_todos_atrativos, name='dados_atrativos'),
     path('atrativo/<int:primary_key>', views.atrativo_detail_view, name='atrativo_detail'),
+    path('atrativos/guia', views.atrativoGuiaAtrela, name='atrativo_guia_atrela'),
 ]

@@ -1,3 +1,4 @@
+from django import forms
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -22,10 +23,24 @@ def roteiro_new(request):
         if form.is_valid():
             Roteiro = form.save(commit=False)
             Roteiro.save()
-            return redirect('home.html')
+            return redirect('/')
     else:
         form = RoteiroForm()
     return render(request, 'catalogo_guias/roteiro_new.html', {'form': form})
+
+def atrativoGuiaAtrela(request):
+    if(request.method == "POST"):
+        dadosPost = request.POST # @TODO: CONTINUAR TRATANDO OS DADOS DAQUI
+        # print(request.user.id)
+        # print(dadosPost)
+        # print(dadosPost["select"])
+        # return redirect()
+    todos_atrativos = Atrativo.objects.all()
+    listaTodosAtrativos = list()
+    for i in todos_atrativos:
+        listaTodosAtrativos.append([ i.id , i.nome ])
+    print(listaTodosAtrativos)
+    return render(request, 'catalogo_guias/atrativo_guia.html', {'guiasatrativos':listaTodosAtrativos})
 
 def atrativo_new(request):
     if request.method == "POST":
@@ -103,3 +118,4 @@ class guia_new(CreateView):
         customuser = form.save()
         login(self.request, customuser)
         return redirect('/')
+

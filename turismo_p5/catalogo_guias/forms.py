@@ -91,3 +91,4 @@ class GuiaCadastroForm(CustomUserForm):
         pessoa = Pessoa_Juridica.objects.create(usuario=user,cnpj = cnpjLimpo, telefone=telefoneLimpo,razao_social=razao_socialLimpo,numeroRegistro=numeroRegistroLimpo,avaliacao=avaliacao)
         
         return user
+
