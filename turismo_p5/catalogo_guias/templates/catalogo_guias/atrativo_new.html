@@ -1,23 +1,20 @@
-{% load static %}
+{% extends 'catalogo_guias/base.html' %}
+{% block customheadload %}
 {% load leaflet_tags %}
 {% load geojson_tags %}
-<html>
-    <head>
-        <title>Cadastro de Roteiro</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+{% load static %}
+{% endblock %}
+        {% block customload %}
         {% leaflet_js %}
         {% leaflet_css %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-
-    </head>
-    <script type="text/javascript" src="{% static 'js/leaflet.ajax.min.js'%}">
-    </script>
+        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+        {% endblock %}
         
-    <body class="roteiro_new">
+
+
+    {% block content %} 
+    <div class="roteiro_new">
             <script type="text/javascript">
                 function main_map_init(map, options){
                     dataurl = '{% url "data" %}'
@@ -38,26 +35,27 @@
               </script>
         <h1>Novo Atrativo</h1>
         <form method="POST" class="roteiro-form">{% csrf_token %}
-            {{ form.non_field_errors }}
-            <div class="fieldWrapper">
-                {{form.nome.errors}}
-                <label for="{{form.nome.id_for_label}}">Nome do Atrativo:</label>
-                {{form.nome}}
-            </div>
-            <div class="fieldWrapper">
-                {{form.infos.errors}}
-                <label for="{{form.infos.id_for_label}}">Informações sobre o atrativo:</label>
-                {{form.infos}}
-            </div>
-            <div class="fieldWrapper">
-                {{form.ponto.errors}}
-                <label for="{{form.ponto.id_for_label}}">Ponto do Atrativo:</label>
-                {{form.ponto}}
-                <p> O ponto que você quer não existe? <a href='{% url 'admin:catalogo_guias_ponto_add' %}'>Cadastre-o agora!</a></p>
-            </div>
-            <button type="submit">Enviar</button>
+            <table>
+                {{ form.non_field_errors }}
+                <div class="fieldWrapper">
+                    {{form.nome.errors}}
+                    <label for="{{form.nome.id_for_label}}">Nome do Atrativo:</label>
+                    {{form.nome}}
+                </div>
+                <div class="fieldWrapper">
+                    {{form.infos.errors}}
+                    <label for="{{form.infos.id_for_label}}">Informações sobre o atrativo:</label>
+                    {{form.infos}}
+                </div>
+                <div class="fieldWrapper">
+                    {{form.ponto.errors}}
+                    <label for="{{form.ponto.id_for_label}}">Ponto do Atrativo:</label>
+                    {{form.ponto}}
+                    <p> O ponto que você quer não existe? <a href='{% url 'admin:catalogo_guias_ponto_add' %}'>Cadastre-o agora!</a></p>
+                </div>
+                <button class="btn" type="submit">Enviar</button>
+            </table>
         </form>
         {% leaflet_map "mapa" callback="main_map_init" %}
-    </body>
-
-</html>
+    </div>
+    {% endblock %}

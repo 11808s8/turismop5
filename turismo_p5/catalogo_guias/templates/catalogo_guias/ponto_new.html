@@ -14,7 +14,9 @@
     <body class="roteiro_new">
         <h1>Novo Ponto</h1>
         <form method="POST" class="roteiro-form">{% csrf_token %}
-            {{ form }}
+            <table>
+                {{ form }}
+            </table>
             {% leaflet_map "mapa" %}
             <button type="submit">Enviar</button>
         </form>

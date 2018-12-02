@@ -15,5 +15,6 @@ urlpatterns = [
     path('atrativo/<int:primary_key>', views.atrativo_detail_view, name='atrativo_detail'),
     path('atrativos/guia', views.atrativoGuiaAtrela, name='atrativo_guia_atrela'),
     path('contas/', include('django.contrib.auth.urls')),
-    path('contas/editar/usuario/cliente',views.update_info_guia,name='editar_guia'),
+    path('contas/editar/usuario/guia',views.update_info_guia,name='editar_guia'),
+    path('contas/editar/usuario/cliente',views.update_info_cliente,name='editar_cliente')
 ]

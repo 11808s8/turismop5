@@ -1,19 +1,10 @@
-{% load static %}
-<html>
-    <head>
-        <!-- {{ form.media }} -->
-        <title>Cadastro de Ponto</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
-    </head>
-    <h2>Login</h2>
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-
-
-</html>
+{% extends "catalogo_guias/base.html" %}
+   
+   {% block content %}
+        <h2>Login</h2>
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+    {% endblock %}

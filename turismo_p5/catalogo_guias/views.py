@@ -1,3 +1,4 @@
+
 from django import forms
 from django.http import Http404
 from django.http import HttpResponse
@@ -6,12 +7,14 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.core.serializers import serialize
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth import login
 from django.db import connection
 
-from .models import Roteiro, Atrativo, Ponto, CustomUser, Pessoa_Juridica
-from .forms import RoteiroForm, AtrativoForm, PontoForm, ClienteCadastroForm,GuiaCadastroForm
+from .models import Roteiro, Atrativo, Ponto, CustomUser, Pessoa_Juridica, Pessoa_Fisica
+from .forms import RoteiroForm, AtrativoForm, \
+            PontoForm, ClienteCadastroForm,GuiaCadastroForm,\
+            GuiaCadastroEditForm, ClienteCadastroEditForm
 
 
 
@@ -32,10 +35,10 @@ def roteiro_new(request):
 def atrativoGuiaAtrela(request):
     if(request.method == "POST"):
         dadosPost = request.POST # @TODO: CONTINUAR TRATANDO OS DADOS DAQUI
-        print(request.user.id)
-        print(dadosPost)
+        # print(request.user.id)
+        # print(dadosPost)
         dadosPost = dadosPost["select"]
-        print(dadosPost)
+        # print(dadosPost)
         with connection.cursor() as cursor:
             insert = 'Insert into public.catalogo_guias_atrativo_guias (atrativo_id, pessoa_juridica_id) values ({},{})'.format(dadosPost, request.user.id)
             cursor.execute(insert)
@@ -44,7 +47,7 @@ def atrativoGuiaAtrela(request):
     q = ""
     with connection.cursor() as cursor:
         select = 'Select * from public.catalogo_guias_atrativo_guias where pessoa_juridica_id={};'.format(request.user.id)
-        print(select)
+        # print(select)
         cursor.execute(select)
         q = cursor.fetchall()
     # print(q[0][1])
@@ -59,7 +62,7 @@ def atrativoGuiaAtrela(request):
     else:
         for i in todos_atrativos:
             listaTodosAtrativos.append([ i.id , i.nome ])
-    print(listaTodosAtrativos)
+    # print(listaTodosAtrativos)
     return render(request, 'catalogo_guias/atrativo_guia.html', {'guiasatrativos':listaTodosAtrativos, 'possuiregistro':retorno})
 
 def atrativo_new(request):
@@ -90,19 +93,34 @@ def dado_atrativo(request, id):
 def update_info_guia(request): 
     instance = get_object_or_404(CustomUser, id=request.user.id)
     pj = Pessoa_Juridica.objects.get(usuario_id=request.user.id)
-    print(pj.razao_social)
     # form.razao_social = pj.razao_social
     # print(form.razao_social)
     
     if(request.POST):
-        form = GuiaCadastroForm(request.POST or None, instance=instance)
+        form = GuiaCadastroEditForm(request.POST or None, instance=instance)
         if form.is_valid():
             form.save()
             return redirect('/')
     else:
-        form = GuiaCadastroForm(request.POST or None, instance=instance, 
+        form = GuiaCadastroEditForm(request.POST or None, instance=instance, 
         initial={'razao_social':pj.razao_social, 'password':'', 'cnpj':pj.cnpj, 'telefone':pj.telefone, 'numero_registro':pj.numero_registro})
-    return render(request, 'catalogo_guias/cadastroUsuario.html', {'form': form}) 
+    return render(request, 'catalogo_guias/cadastroUsuario.html', {'form': form, 'tipoconta': 'Guia de Turismo', 'edit': True}) 
+
+def update_info_cliente(request): 
+    instance = get_object_or_404(CustomUser, id=request.user.id)
+    pf = Pessoa_Fisica.objects.get(usuario_id=request.user.id)
+    # form.razao_social = pj.razao_social
+    # print(form.razao_social)
+    
+    if(request.POST):
+        form = ClienteCadastroEditForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = ClienteCadastroEditForm(request.POST or None, instance=instance, 
+        initial={'password':'', 'cpf':pf.cpf, 'telefone':pf.telefone, 'rg':pf.rg})
+    return render(request, 'catalogo_guias/cadastroUsuario.html', {'form': form, 'tipoconta': 'Cliente', 'edit': True}) 
 
 
 # class AtrativoDetailView(generic.DetailView):

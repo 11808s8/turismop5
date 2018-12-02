@@ -1,34 +1,31 @@
+{% extends 'catalogo_guias/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Cadastro de Roteiro</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+{% block title %} - Atrelar-se a atrativo {% endblock %}
+{% block customload %}
+<link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{% endblock %}
 
-    </head>
-    </script>
-        
-        <h1>Selecione o atrativo que você atende:</h1>
-        <form method="POST" class="roteiro-form" >{% csrf_token %}
-            {% comment %} {{ form.non_field_errors }} {% endcomment %}
+{% block content %}
+<h1>Selecione o atrativo que você atende:</h1>
+<form method="POST" class="roteiro-form" >{% csrf_token %}
+    {% comment %} {{ form.non_field_errors }} {% endcomment %}
+    <table>
+        {% comment %} <div class="fieldWrapper"> {% endcomment %}
+        {% if possuiregistro  %}
+        <select name="select">
+            {% for item in guiasatrativos %}
+                <option  value="{{item.0}}">{{item.1}}</option>
+            {% endfor %}
+
             
-            {% comment %} <div class="fieldWrapper"> {% endcomment %}
-            {% if possuiregistro  %}
-             <select name="select">
-                {% for item in guiasatrativos %}
-                    <option  value="{{item.0}}">{{item.1}}</option>
-                {% endfor %}
-
-                <button type="submit">Enviar</button>
-            </select> 
-            {% else %}
-                <h5> Não há atrativos disponíveis para você se cadastrar! </h5>
-            {% endif %}
-        </form>
-    </body>
-
-</html>
+        </select> 
+        <button type="submit">Enviar</button>
+        {% else %}
+            <h5> Não há atrativos disponíveis para você se cadastrar! </h5>
+        {% endif %}
+    </table>
+</form>
+{% endblock %}

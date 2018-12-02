@@ -1,0 +1,71 @@
+{% load static %}
+{% block headload %}
+{% endblock %}
+<html>
+    <head>
+        <title>Turismo P5 {% block title %} {% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script><link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        {% block customload %}
+        {% endblock %}
+        <link rel='stylesheets' href='https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/leaflet.ajax.min.js'%}"></script>
+
+    </head>
+    
+    <body>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'index' %}">TurismoP5</a>
+            {% comment %} <div class="page-header"> {% endcomment %}
+            <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+                
+                {% if user.is_guia or user.is_superuser %}
+                    {% comment %} <a class="nav-link" href="{% url 'roteiro_new' %}">Cadastrar Roteiro </a> {% endcomment %}
+                    <li>
+                        <a class="nav-link" href="{% url 'atrativo_new' %}">Cadastrar Atrativo </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'atrativo_guia_atrela' %}">Cadastrar-se como Guia em atrativo </a>
+                    </li>
+                {% endif %}
+                Olá, {{ user.short_name }}.
+                <li>
+                    <a class="nav-link" href="{% url 'logout' %}"><span class="oi oi-account-logout"></span>Sair </a>
+                </li>
+                {% if user.is_cliente or user.is_superuser %}
+                    <li>
+                        <a class="nav-link" href="{% url 'editar_cliente' %}">Editar informações pessoais</a>
+                    </li>
+                {% endif %}
+                {% if user.is_guia or user.is_superuser %}
+                    <li>
+                        <a class="nav-link" href="{% url 'editar_guia' %}">Editar informações pessoais </a>
+                    </li>
+                {% endif %}
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Administração do Site</a>
+                </li>
+                {% endif %}
+            {% else %}
+                <li>
+                    <a class="nav-link" href="{% url 'login' %}">Login </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'cadastro_cliente' %}">Cadastrar Cliente</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'cadastro_guia' %}">Cadastrar Guia de Turismo </a>
+                </li>
+            {% endif %}
+            </ul>
+            {% comment %} </div> {% endcomment %}
+        </nav>
+        {% block content %}
+        {% endblock  %}
+        
+    </body>
+</html>

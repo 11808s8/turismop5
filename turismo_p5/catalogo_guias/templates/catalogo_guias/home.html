@@ -1,21 +1,17 @@
-{% load static %}
+{% extends "catalogo_guias/base.html" %}
+
+{% block headload %}
 {% load leaflet_tags %}
 {% load geojson_tags %}
-<html>
-    <head>
-        <title>Turismo P5</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        {% leaflet_js %}
-        {% leaflet_css %} 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/leaflet.ajax.min.js'%}"></script>
+{% endblock %}
 
-    </head>
-    
-    <body>
-        <script type="text/javascript">
+{% block customload %}
+{% leaflet_js %}
+{% leaflet_css %}
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
             
             function main_map_init(map, options){
                 
@@ -52,30 +48,5 @@
                 });
             }
         </script>
-        <h1>Home do site!!</h1>
-        <div class="page-header">
-        {% if user.is_authenticated %}
-            Hi {{ user.short_name }}!
-            <a href="{% url 'logout' %}"><button>Sair</button></a>
-            {% if user.is_guia %}
-                {% comment %} <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a> {% endcomment %}
-                <a href="{% url 'atrativo_new' %}"><button>Cadastrar Atrativo</button></a>
-                <a href="{% url 'atrativo_guia_atrela' %}"><button>Cadastrar-se como Guia em atrativo</button></a>
-                <a href="{% url 'editar_guia' %}"><button>Editar informações pessoais</button></a>
-            {% endif %}
-            {% if user.is_superuser %}
-            <a href="/admin/"><button>Administração do Site</button></a>
-            {% endif %}
-        {% else %}
-            <p>Você não está logado!</p>
-            <a href="{% url 'login' %}"><button>Login</button></a>
-            <a href="{% url 'cadastro_cliente' %}"><button>Cadastrar Cliente</button></a>
-            <a href="{% url 'cadastro_guia' %}"><button>Cadastrar Guia de Turismo</button></a>
-        {% endif %}
-            
-        </div>
-
-        {% leaflet_map "mapa" callback="main_map_init" %}
-
-    </body>
-</html>
+{% leaflet_map "mapa" callback="main_map_init" %}
+{% endblock %}

@@ -1,15 +1,15 @@
+
+{% extends 'catalogo_guias/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Cadastro de Roteiro</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        {% block title %} - Cadastro de Roteiro {% endblock %}
+        {% block customload %}
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'css/catalogo_guias.css' %}">
-    </head>
-    <body class="roteiro_new">
-        
+        {% endblock %}
+    
         {% block content %}
+        {% if user.is_authenticated %}
         <h1>Nome: {{ atrativo.nome }}</h1>
 
         <p>Descrição do atrativo: {{ atrativo.infos }} </p> <!-- author detail link not yet defined -->
@@ -29,7 +29,8 @@
             <!-- <p><strong>Imprint:</strong> {{copy.imprint}}</p> -->
             <!-- <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p> -->
         {% endfor %}
+        {% else %}
+            <p> Você precisa estar logado para ver este conteúdo! </p>
+        {% endif %}
         
         {% endblock %}
-    </body>
-</html>

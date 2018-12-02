@@ -27,6 +27,9 @@ class PontoForm(forms.ModelForm):
         model = Ponto
         fields = ('geom',)
         widgets = {'geom': LeafletWidget()}
+        labels = {
+            'geom': 'Ponto Geométrico'
+        }
 
 class EditPonto(UpdateView):
     model = Ponto
@@ -34,10 +37,15 @@ class EditPonto(UpdateView):
     template_name = 'ponto_new.html'
 
 class CustomUserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(label='Senha', widget=forms.PasswordInput())
     class Meta:
         model = CustomUser
         fields = ('full_name', 'short_name', 'email','password')
+        labels = {
+            'full_name': 'Nome Completo',
+            'short_name': 'Primeiro Nome',
+            'email': 'Email',
+        }
 
 class PessoaFisicaForm(forms.ModelForm):
     class Meta:
@@ -51,9 +59,9 @@ class PessoaJuridicaForm(forms.ModelForm):
 
 
 class ClienteCadastroForm(CustomUserForm):
-    cpf = forms.CharField(max_length=14)
-    rg = forms.CharField(max_length=14)
-    telefone = forms.IntegerField()
+    cpf = forms.CharField(label='CPF: ', max_length=14)
+    rg = forms.CharField(label='RG: ', max_length=14)
+    telefone = forms.IntegerField(label='Telefone: ')
 
     class Meta(CustomUserForm.Meta):
         model = CustomUser
@@ -72,7 +80,7 @@ class ClienteCadastroForm(CustomUserForm):
         
         
         cpfLimpo = self.cleaned_data.get('cpf')
-        print(self.cleaned_data.get('telefone'))
+        
         telefoneLimpo = self.cleaned_data.get('telefone')
         rgLimpo = self.cleaned_data.get('rg')
         pessoa = Pessoa_Fisica.objects.create(usuario=user,cpf = cpfLimpo, telefone=telefoneLimpo,rg=rgLimpo)
@@ -80,10 +88,10 @@ class ClienteCadastroForm(CustomUserForm):
         return user
 
 class GuiaCadastroForm(CustomUserForm):
-    razao_social = forms.CharField(max_length=150)
-    cnpj = forms.CharField(max_length=14)
-    telefone = forms.IntegerField()
-    numero_registro = forms.IntegerField()
+    razao_social = forms.CharField(label='Razão Social: ', max_length=150)
+    cnpj = forms.CharField(label='CNPJ: ', max_length=14)
+    telefone = forms.IntegerField(label='Telefone: ')
+    numero_registro = forms.IntegerField(label='Número do registro no Cadastur: ')
     class Meta(CustomUserForm.Meta):
         model = CustomUser
 
@@ -102,7 +110,7 @@ class GuiaCadastroForm(CustomUserForm):
         cnpjLimpo = self.cleaned_data.get('cnpj')
         
         avaliacao = 0
-        print(self.cleaned_data.get('telefone'))
+        
         telefoneLimpo = self.cleaned_data.get('telefone')
         razao_socialLimpo = self.cleaned_data.get('razao_social')
         numeroRegistroLimpo = self.cleaned_data.get('numero_registro')
@@ -110,3 +118,66 @@ class GuiaCadastroForm(CustomUserForm):
         
         return user
 
+class GuiaCadastroEditForm(forms.ModelForm):
+    razao_social = forms.CharField(label='Razão Social: ', max_length=150)
+    cnpj = forms.CharField(label='CNPJ: ', max_length=14)
+    telefone = forms.IntegerField(label='Telefone: ')
+    numero_registro = forms.IntegerField(label='Número do registro no Cadastur: ')
+    id          = forms.CharField(widget=forms.HiddenInput())
+    class Meta:
+        model = Pessoa_Juridica
+        fields = ('id',)
+
+    @transaction.atomic
+    def save(self):
+        
+        idLimpo = self.cleaned_data.get('id')
+        
+        cnpjLimpo = self.cleaned_data.get('cnpj')
+        
+        avaliacao = 0
+        
+        telefoneLimpo = self.cleaned_data.get('telefone')
+        razao_socialLimpo = self.cleaned_data.get('razao_social')
+        numeroRegistroLimpo = self.cleaned_data.get('numero_registro')
+        pessoa = Pessoa_Juridica.objects.get(usuario_id=idLimpo)
+        pessoa.cnpj = cnpjLimpo
+        pessoa.telefone = telefoneLimpo
+        pessoa.razao_social = razao_socialLimpo
+        pessoa.numero_registro = numeroRegistroLimpo
+        pessoa.save()
+        # return user
+
+class ClienteCadastroEditForm(forms.ModelForm):
+    cpf = forms.CharField(label='CPF: ', max_length=14)
+    rg = forms.CharField(label='RG: ', max_length=14)
+    telefone = forms.IntegerField(label='Telefone: ')
+    id          = forms.CharField(widget=forms.HiddenInput())
+    class Meta:
+        model = Pessoa_Fisica
+        fields = ('id',)
+
+    @transaction.atomic
+    def save(self):
+        # # user = super().save(commit=False)
+        # # user.is_cliente = True
+
+        # # hashed_password = make_password(self.cleaned_data.get('password'), None)
+        # # user.password = hashed_password
+        
+        # # user.save()
+        # users_group = Group.objects.get(name='Clientes')
+        # user.groups.add(users_group)
+        
+        
+        cpfLimpo = self.cleaned_data.get('cpf')
+        telefoneLimpo = self.cleaned_data.get('telefone')
+        rgLimpo = self.cleaned_data.get('rg')
+        idLimpo = self.cleaned_data.get('id')
+        pessoa = Pessoa_Fisica.objects.get(usuario_id=idLimpo)
+        pessoa.cpf = cpfLimpo
+        pessoa.telefone = telefoneLimpo
+        pessoa.rg = rgLimpo
+        pessoa.save()
+        
+        # return user

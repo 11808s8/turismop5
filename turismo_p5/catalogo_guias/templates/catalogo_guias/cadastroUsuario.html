@@ -1,13 +1,15 @@
-
+{% extends "catalogo_guias/base.html" %}
 {% block content %}
   <div class="row">
     <div class="col-md-8 col-sm-10 col-12">
-      <h2>Sign up as a {{ user_type }}</h2>
+      <h2>{% if edit %} Edite {% else %} Crie {% endif%} sua conta de {{ tipoconta }}!</h2>
       <form method="post" novalidate>
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
-        {{ form }}
-        <button type="submit" class="btn btn-success">Sign up</button>
+          <table>
+          {{ form }}
+          </table>
+        <button type="submit" class="btn btn-success">Enviar</button>
       </form>
     </div>
   </div>
