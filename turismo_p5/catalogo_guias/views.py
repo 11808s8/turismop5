@@ -52,8 +52,11 @@ def atrativoGuiaAtrela(request):
         q = cursor.fetchall()
     # print(q[0][1])
     listaAtrativos = list()
-    for i in q:
-        listaAtrativos.append(q[0][1])
+    print(q)
+    for i in range(len(q)):
+        listaAtrativos.append(q[i][1])
+        
+    print(listaAtrativos)
     todos_atrativos = Atrativo.objects.exclude(id__in=listaAtrativos)
     listaTodosAtrativos = list()
     retorno = True
