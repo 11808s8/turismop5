@@ -12,16 +12,19 @@
         {% block content %}
         <h1>Nome: {{ atrativo.nome }}</h1>
 
-        <p>{{ atrativo.infos }} </p> <!-- author detail link not yet defined -->
+        <p>Descrição do atrativo: {{ atrativo.infos }} </p> <!-- author detail link not yet defined -->
         
         <div style="margin-left:20px;margin-top:20px">
         
 
-        {% for guia in atrativo.guias.all %}
+        {% for guia in listaguias %}
             <hr>
             <!-- <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p> -->
             <!-- {% if copy.status != 'a' %} -->
-            <p><strong>CNPJ do guia:</strong> {{guia.cnpj}}</p>
+            <p><strong>Nome do guia:</strong> {{guia.razao_social}}</p>
+            <p><strong>Email :</strong> {{guia.email}}</p>
+            <p><strong>Telefone:</strong> {{guia.telefone}}</p>
+            <p><strong>CNPJ:</strong> {{guia.cnpj}}</p>
             <!-- {% endif %} -->
             <!-- <p><strong>Imprint:</strong> {{copy.imprint}}</p> -->
             <!-- <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p> -->

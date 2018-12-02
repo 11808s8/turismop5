@@ -39,7 +39,7 @@
                             var content = '<ul>';
                             for(var i=0;i<data.length;i++){
                                 if(data[i].fields.ponto === feature.id){
-                                    content+='<li><a href="/atrativo/'+  data[i].pk + '" > Atrativo ' + data[i].fields.nome + '</a>';        
+                                    content+='<li><a href="/atrativo/'+  data[i].pk + '" >' + data[i].fields.nome + '</a>';        
                                 }
                             }
                             console.log('LatLng: ' + layer.getLatLng());
@@ -57,9 +57,15 @@
         {% if user.is_authenticated %}
             Hi {{ user.short_name }}!
             <a href="{% url 'logout' %}"><button>Sair</button></a>
-            {% comment %} <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a> {% endcomment %}
-            <a href="{% url 'atrativo_new' %}"><button>Cadastrar Atrativo</button></a>
-            <a href="{% url 'atrativo_guia_atrela' %}"><button>Cadastrar-se como Guia em atrativo</button></a>
+            {% if user.is_guia %}
+                {% comment %} <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a> {% endcomment %}
+                <a href="{% url 'atrativo_new' %}"><button>Cadastrar Atrativo</button></a>
+                <a href="{% url 'atrativo_guia_atrela' %}"><button>Cadastrar-se como Guia em atrativo</button></a>
+                <a href="{% url 'editar_guia' %}"><button>Editar informações pessoais</button></a>
+            {% endif %}
+            {% if user.is_superuser %}
+            <a href="/admin/"><button>Administração do Site</button></a>
+            {% endif %}
         {% else %}
             <p>Você não está logado!</p>
             <a href="{% url 'login' %}"><button>Login</button></a>

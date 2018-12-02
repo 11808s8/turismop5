@@ -7,6 +7,6 @@ class Migration(migrations.Migration):
     ]
     operations = [
         migrations.RunSQL(
-            [("alter table controle_registro alter column nro_registro type varchar")],
+            # [("alter table controle_registro alter column nro_registro type varchar")],
             [("Create table controle_ultima_verificacao_registro (id SERIAL PRIMARY KEY,ano int, trimestre int);")])
     ]

@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
                 ('cnpj', models.CharField(max_length=14)),
                 ('razao_social', models.CharField(max_length=150)),
                 ('avaliacao', models.FloatField()),
-                ('numeroRegistro', models.PositiveIntegerField()),
+                ('numero_registro', models.BigIntegerField()),
             ],
             options={
                 'abstract': False,

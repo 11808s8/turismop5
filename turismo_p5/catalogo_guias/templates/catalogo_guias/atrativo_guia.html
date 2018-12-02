@@ -17,17 +17,17 @@
             {% comment %} {{ form.non_field_errors }} {% endcomment %}
             
             {% comment %} <div class="fieldWrapper"> {% endcomment %}
+            {% if possuiregistro  %}
              <select name="select">
                 {% for item in guiasatrativos %}
                     <option  value="{{item.0}}">{{item.1}}</option>
                 {% endfor %}
+
+                <button type="submit">Enviar</button>
             </select> 
-            
-            {% comment %} </div> {% endcomment %}
-                {% comment %} {{form.nome.errors}} {% endcomment %}
-                {% comment %} <label for="{{form.nome.id_for_label}}">Nome do Atrativo:</label> {% endcomment %}
-                {% comment %} {{form.nome}} {% endcomment %}
-            <button type="submit">Enviar</button>
+            {% else %}
+                <h5> Não há atrativos disponíveis para você se cadastrar! </h5>
+            {% endif %}
         </form>
     </body>
 

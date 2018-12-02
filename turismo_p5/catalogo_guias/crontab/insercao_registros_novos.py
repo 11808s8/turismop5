@@ -23,20 +23,43 @@ trimestre = int(dt.datetime.now().month/3) # já arredonda o mês
 
 # caso não tenha sequer 1 registro (usualmente ocorre na implantação dos migrates)
 if(count==0):
+	atualizou=False
+	while(atualizou==False):
+		url = 'http://www.turismo.gov.br/dadosabertos/cadasturpf/{0}0{1}TrimestrePF.csv'.format(ano,trimestre)
+		print(url)
+		codigo_retorno = requests.head(url).status_code
+		print(codigo_retorno)
+		if(codigo_retorno == 200):
+			atualizou=True
+		else:
+			trimestre = trimestre - 1
+
 	insert = "insert into {0} (ano, trimestre) values ({1}, {2})".format(tabela,ano,trimestre)
 	cursor.execute(insert)
 	conn.commit() # persiste a inserção
 else:
 	select ="SELECT ano,trimestre FROM {0} where ano = {1} and trimestre = {2};".format(tabela,ano,trimestre)
 	
+			
 	cursor.execute(select)
 	resultado = cursor.fetchall()
 
 	# Atualiza o registro caso não seja o último
 	if(len(resultado)==0):
+		atualizou=False
+		while(atualizou==False):
+			url = 'http://www.turismo.gov.br/dadosabertos/cadasturpf/{0}0{1}TrimestrePF.csv'.format(ano,trimestre)
+			print(url)
+			codigo_retorno = requests.head(url).status_code
+			if(codigo_retorno == 200):
+				atualizou=True
+			else:
+				trimestre = trimestre - 1
+
 		update = "update {0} set ano = {1}, trimestre = {2} where id = 1;".format(tabela,ano,trimestre)
-		cursor.execute(insert)
+		cursor.execute(update)
 		conn.commit() # persiste a atualização
+		# cursor.execute("truncate controle_registro;")
 	select = "select count(*) FROM controle_registro;"
 	cursor.execute(select)
 	total = cursor.fetchall()
@@ -45,7 +68,7 @@ else:
 		trimestre = "0{}".format(trimestre)
 
 		url = 'http://www.turismo.gov.br/dadosabertos/cadasturpf/{0}{1}TrimestrePF.csv'.format(ano,trimestre)
-
+		print(url)
 		codigo_retorno = requests.head(url).status_code
 
 		if(codigo_retorno == 200):
@@ -54,13 +77,21 @@ else:
 			for linha in c['Número do Certificado']:
 				linha = linha.replace('.','')
 				linha = linha.replace('-','')
-				insert = "Insert into controle_registro (nro_registro) values ({0});".format(linha)
-				cursor.execute(insert)
-				conn.commit() # persiste a inserção
+				linha = linha.replace(' ','')
+				print(linha)
+				
+				try:
+					insert = "Insert into controle_registro (nro_registro) values ({0});".format(linha)
+					cursor.execute(insert)
+					conn.commit() # persiste a inserção
+				except psycopg2.Error:
+					print('Database error')
+					conn.rollback()
 			print("Csv lido com sucesso!")
 		else:
 			print("Não foi possível ler o csv!")
 	else:
 		print("Base de dados já atualizada!")
+		
 
 conn.close()

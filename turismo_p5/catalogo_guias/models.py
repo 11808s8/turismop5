@@ -45,7 +45,7 @@ class Pessoa_Juridica(Pessoa):
     cnpj = models.CharField(max_length=14)
     razao_social = models.CharField(max_length=150)
     avaliacao = models.FloatField()
-    numeroRegistro = models.PositiveIntegerField()
+    numero_registro = models.BigIntegerField()
 
 class Chat(models.Model):
     mensagens = models.TextField()
