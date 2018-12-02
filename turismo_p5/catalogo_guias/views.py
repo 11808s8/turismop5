@@ -31,9 +31,9 @@ def roteiro_new(request):
 def atrativoGuiaAtrela(request):
     if(request.method == "POST"):
         dadosPost = request.POST # @TODO: CONTINUAR TRATANDO OS DADOS DAQUI
-        # print(request.user.id)
+        print(request.user.id)
         # print(dadosPost)
-        # print(dadosPost["select"])
+        print(dadosPost["select"])
         # return redirect()
     todos_atrativos = Atrativo.objects.all()
     listaTodosAtrativos = list()
