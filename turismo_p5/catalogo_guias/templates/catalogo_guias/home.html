@@ -16,7 +16,9 @@
     
     <body>
         <script type="text/javascript">
+            
             function main_map_init(map, options){
+                
                 dataurl = '{% url "dados_atrativos" %}'
                 dataurl2 = '{% url "data" %}'
                 fetch(dataurl)
@@ -36,11 +38,12 @@
                             // var content = '<h3> ID Ponto: ' + feature.id + '</h3>';
                             var content = '<ul>';
                             for(var i=0;i<data.length;i++){
-                                if(data[0].fields.ponto === feature.id){
-                                    content+='<li><a href="/atrativo/'+  data[0].pk + '" > Atrativo ' + data[0].fields.nome + '</a>';
-                                    
+                                if(data[i].fields.ponto === feature.id){
+                                    content+='<li><a href="/atrativo/'+  data[i].pk + '" > Atrativo ' + data[i].fields.nome + '</a>';        
                                 }
                             }
+                            console.log('LatLng: ' + layer.getLatLng());
+                            
                             content+='</ul>';
                             layer.bindPopup(content);
                             
@@ -51,10 +54,19 @@
         </script>
         <h1>Home do site!!</h1>
         <div class="page-header">
-            <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a>
+        {% if user.is_authenticated %}
+            Hi {{ user.short_name }}!
+            <a href="{% url 'logout' %}"><button>Sair</button></a>
+            {% comment %} <a href="{% url 'roteiro_new' %}"><button>Cadastrar Roteiro</button></a> {% endcomment %}
             <a href="{% url 'atrativo_new' %}"><button>Cadastrar Atrativo</button></a>
+            <a href="{% url 'atrativo_guia_atrela' %}"><button>Cadastrar-se como Guia em atrativo</button></a>
+        {% else %}
+            <p>Você não está logado!</p>
+            <a href="{% url 'login' %}"><button>Login</button></a>
             <a href="{% url 'cadastro_cliente' %}"><button>Cadastrar Cliente</button></a>
             <a href="{% url 'cadastro_guia' %}"><button>Cadastrar Guia de Turismo</button></a>
+        {% endif %}
+            
         </div>
 
         {% leaflet_map "mapa" callback="main_map_init" %}
