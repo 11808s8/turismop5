@@ -24,3 +24,7 @@ $ python3 insercao_registros_novos.py<br>
 Para rodar o servidor local:
 
 python3 manage.py runserver
+
+!Warning
+
+Em ambientes windows a biblioteca gdal, da extensão Postgis, dá erro na instalação dos requirements. Não foi encontrado ainda uma solução para isso.
